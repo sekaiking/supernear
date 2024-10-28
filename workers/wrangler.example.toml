@@ -1,0 +1,39 @@
+name = "workers"
+main = "src/index.ts"
+compatibility_date = "2024-10-20"
+compatibility_flags = ["nodejs_compat_v2"]
+
+[vars]
+CONTRACT_ID = "royal-bomb.testnet"
+SECRET = "keep this a secret!"
+NEAR_RPC = "https://rpc.testnet.near.org"
+MISTRAL_API_KEY = ""
+
+[[kv_namespaces]]
+binding = "NONCE_STORE"
+id = ""
+preview_id = ""
+
+[[kv_namespaces]]
+binding = "PLANS_RATE_LIMIT_STORE"
+id = ""
+preview_id = ""
+
+[[kv_namespaces]]
+binding = "CACHED_USER_PLANS"
+id = ""
+preview_id = ""
+
+[ai]
+binding = "AI"
+
+
+[[vectorize]]
+binding = "VECTOR_INDEX"
+index_name = ""
+
+
+[[d1_databases]]
+binding = "DB"
+database_name = "database"
+database_id = ""

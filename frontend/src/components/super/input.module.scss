@@ -1,0 +1,113 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 66px;
+}
+
+.glow {
+  position: absolute;
+  inset: 0px;
+  filter: blur(2px);
+  opacity: 0.8;
+  overflow: hidden;
+  border-radius: 11px;
+}
+
+.glow:before {
+  content: "";
+  z-index: -2;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  width: 100%;
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-image: conic-gradient(
+    #fff 0%,
+    rgba(#08aeea, 0.8) 5%,
+    rgba(#2af598, 0.8) 20%,
+    #fff 38%,
+    #fff 50%,
+    rgba(234, 53, 223, 0.8) 55%,
+    rgba(#f92d96, 0.8) 60%,
+    rgba(#fad961, 0.8) 70%,
+    rgba(#f76b1c, 0.8) 75%,
+    #fff 80%
+  );
+
+  /* Initially pause the animation */
+  animation: rotate 10s 0.3s linear infinite paused;
+  transition: all 2s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Control animation state with .animated class */
+.animated .glow:before {
+  animation-play-state: running;
+}
+
+.glow:before {
+  animation-delay: -0.9s;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+.input {
+  border: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  font-size: 18px;
+  outline: none;
+  padding: 0 1rem;
+  background: linear-gradient(
+    to right,
+    rgba(#fff, 0.9) 0%,
+    #fff 50%,
+    rgba(#fff, 0.9) 100%
+  );
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  &::placeholder {
+    color: #939393;
+    font-weight: 500;
+  }
+}
+
+.inputButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  height: 80%;
+  aspect-ratio: 1.3;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(150, 150, 150, 0.1);
+  color: inherit;
+  background: #fff;
+  cursor: pointer;
+}

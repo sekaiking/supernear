@@ -1,0 +1,856 @@
+[
+  {
+    "action": "send_token",
+    "parameters": [
+      "type TokenTransfer = {",
+      "  token_or_address: string;",
+      "  amount: number;",
+      "  receiver: string;",
+      "}[]",
+      "",
+      "Rules:",
+      "- Minimum 1 transfer required",
+      "- Receiver format: only letters, numbers, hyphens, underscores + .near/.testnet",
+      "- Valid tokens: \"NEAR\", \"USDc\", \"rEF\", \"usdt.near\", \"usn.token.near\", etc.",
+      "",
+      "Example:",
+      "\"send 100 USDT to bob.near\" → [ { token_or_address: \"USDT\", amount: 100, receiver: \"bob.near\" }]",
+      "\"split 1000 USDT between bob.near and alice.near\" → [ { token_or_address: \"USDT\", amount: 500, receiver: \"bob.near\" }, { token_or_address: \"USDT\", amount: 500, receiver: \"alice.near\" }]",
+      "\"send 50 usn.token.near to user1.near, 30 to user2.near and 20 to user3.testnet\" → [ { token_or_address: \"usn.token.near\", amount: 50, receiver: \"user1.near\" }, { token_or_address: \"usn.token.near\", amount: 30, receiver: \"user2.near\" }, { token_or_address: \"usn.token.near\", amount: 20, receiver: \"user3.testnet\" }]"
+    ],
+    "old_parameters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["token_or_address", "amount", "receiver"],
+        "properties": {
+          "token_or_address": {
+            "description": "The name or the address of the token",
+            "type": "string",
+            "examples": ["near", "USDT", "rEF", "usdt.near", "usn.token.near"]
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount of tokens to send",
+            "minimum": 0
+          },
+          "receiver": {
+            "type": "string",
+            "description": "Single recipient account ID (must end in .near or .testnet)",
+            "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+          }
+        }
+      }
+    },
+    "examples": [
+      "Send 1 NEAR to alice.near",
+      "Transfer 5 USN to bob.testnet",
+      "Send 100 USDT to charlie.near",
+      "I want to send 10 NEAR tokens to dave.testnet",
+      "Transfer NEAR to eve.near",
+      "Split 0.5 NEAR between hana.near and baka.near",
+      "pls send 2.5 NEAR to mike.near",
+      "transfer my wnear to sarah.testnet",
+      "send exactley 42.69 near to crypto.near",
+      "can u send 500 usdt to trading.near",
+      "split 100 USN between team.near, dev.near and admin.near",
+      "transfer all my ETH to safe.near",
+      "send 0.1 near to friend.testnet asap",
+      "need 2 send 750 USDT to merchant.near",
+      "tranfer 25 wnear to staking.near",
+      "send the 300 near we talked about to alice.testnet",
+      "plz send them 5 eth at wallet.near",
+      "send those 50 usn to the address bob.near",
+      "transfer remaining 15.7 near to backup.testnet",
+      "send exactly 420.69 usdt to trade.near pls",
+      "split 250 near between validators.near and treasury.near evenly",
+      "transfer my 33 wnear tokens to pool.near asap",
+      "send 1k usdt to exchange.near",
+      "pls transfer the 60 near we discussed to client.testnet",
+      "send 0.5 eth to my other account backup.near",
+      "lets send 888 near to lucky.testnet"
+    ]
+  },
+  {
+    "action": "send_nft",
+    "parameters": {
+      "type": "object",
+      "required": ["receiver", "nft_id"],
+      "properties": {
+        "receiver": {
+          "type": "string",
+          "description": "Recipient account ID",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+        },
+        "nft_id": {
+          "type": "string",
+          "description": "Identifier of the NFT to send"
+        },
+        "contract_id": {
+          "type": "string",
+          "description": "Contract address of the NFT",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+        }
+      }
+    },
+    "examples": [
+      "Send my NFT to alice.near",
+      "Transfer NFT with ID #1234 to bob.testnet",
+      "Send collectible to charlie.near",
+      "I want to transfer my NFT to dave.testnet",
+      "Send my digital collectible to eve.near",
+      "transfer nft #5678 to collector.near",
+      "send that rare nft to whale.testnet",
+      "pls transfer my punk to newowner.near",
+      "send NFT number 9012 to gallery.near",
+      "transfer the ape to trader.testnet",
+      "send my favorite nft to vault.near",
+      "can u transfer token #4242 to friend.near",
+      "send this collectible to museum.testnet",
+      "transfer my genesis nft to archive.near",
+      "pls send nft id 7777 to wallet.near",
+      "send that cool nft we talked about to art.testnet",
+      "transfer my limited edition to collector.near",
+      "send special nft #1111 to showcase.near",
+      "give my rare collectible to vault.testnet",
+      "transfer the trophy nft to winner.near",
+      "send my most valuable nft to safe.near",
+      "transfer edition #123 to gallery.testnet",
+      "send this unique piece to curator.near",
+      "pls transfer my og nft to hodler.near",
+      "send game item #8989 to player.testnet"
+    ]
+  },
+  {
+    "action": "call_contract",
+    "parameters": [
+      "type ContractCall = {",
+      "  contract_id: string;",
+      "  method_name: string;",
+      "  args?: Record<string, any>;",
+      "}[]",
+      "",
+      "Rules:",
+      "- contract_id must end in .near or .testnet and contain only lowercase letters, numbers, hyphens, and underscores.",
+      "- method_name is required and represents the name of the contract method to call.",
+      "- args is optional, allowing any key-value pairs to be passed as arguments to the contract method.",
+      "",
+      "Example:",
+      "\"call method 'get_balance' on contract 'wallet.near' with no arguments\" → [ { contract_id: \"wallet.near\", method_name: \"get_balance\" }]",
+      "\"call 'transfer' on 'funding.testnet' with args { to: 'user.near', amount: 1000 }\" → [ { contract_id: \"funding.testnet\", method_name: \"transfer\", args: { to: \"user.near\", amount: 1000 } }]"
+    ],
+    "old_parameters": {
+      "type": "object",
+      "required": ["contract_id", "method_name"],
+      "properties": {
+        "contract_id": {
+          "type": "string",
+          "description": "Contract account ID",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+        },
+        "method_name": {
+          "type": "string",
+          "description": "Name of the contract method to call"
+        },
+        "args": {
+          "type": "object",
+          "description": "Arguments to pass to the contract method"
+        }
+      }
+    },
+    "examples": [
+      "Call contract social.near",
+      "Call purshase in supernear.testnet",
+      "get_user_subscription('baka.near') contract.near",
+      "execute claim_rewards on staking.near",
+      "Call hello.near-examples.near",
+      "call withdraw on pool.testnet",
+      "run get_balance for wallet.near",
+      "execute token.near transfer",
+      "call check_status on oracle.testnet",
+      "run nft.near mint()",
+      "execute swap() on exchange.near",
+      "call register() on dao.testnet",
+      "run get_info on 0.stats.near",
+      "execute update on registry.near",
+      "call validate on bridge.testnet",
+      "run initialize on factory.near",
+      "execute set_config() on admin.near",
+      "call get_metadata on nft.mintbase.collection.testnet",
+      "run calculate on math.near",
+      "execute verify on checker.near",
+      "call process() on queue.testnet",
+      "run finalize() on escrow.near",
+      "execute pause() on emergency.near",
+      "call distribute() on rewards.testnet",
+      "run audit() on security.near",
+      "execute vote() on governance.testnet"
+    ]
+  },
+  {
+    "action": "near_market",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "enum": [
+            "price",
+            "market_cap",
+            "volume",
+            "tokenomics",
+            "chart",
+            "analysis",
+            "prediction"
+          ],
+          "description": "Market metric to query"
+        },
+        "time_period": {
+          "type": "string",
+          "description": "Time period for historical data",
+          "enum": ["24h", "7d", "30d", "90d", "1y", "all"]
+        },
+        "quote_currency": {
+          "type": "string",
+          "description": "Currency to quote prices in",
+          "enum": ["USD", "BTC", "ETH"]
+        }
+      }
+    },
+    "examples": [
+      "What is Near price today?",
+      "Near market cap",
+      "Near tokenomics",
+      "whats the current near price",
+      "show me near price chart",
+      "near price in last 24h",
+      "near trading volume",
+      "price of near in eth",
+      "near market analysis",
+      "near price prediction",
+      "near/usdt price",
+      "near price history",
+      "current near marketcap",
+      "near price alerts",
+      "near price in btc",
+      "near market sentiment",
+      "near trading pairs",
+      "near price movement",
+      "near market trends",
+      "near price resistance",
+      "near support levels",
+      "near market depth",
+      "near price targets",
+      "near trading signals",
+      "near market stats"
+    ]
+  },
+  {
+    "action": "manage_stake",
+    "parameters": {
+      "type": "object",
+      "required": ["action_type"],
+      "properties": {
+        "action_type": {
+          "type": "string",
+          "enum": ["stake", "unstake", "claim_rewards"],
+          "description": "Type of staking action"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount of NEAR to stake/unstake",
+          "minimum": 0
+        },
+        "validator": {
+          "type": "string",
+          "description": "Validator account ID",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+        }
+      }
+    },
+    "examples": [
+      "Stake 10 near near",
+      "Unstake my near",
+      "Collect staking rewards",
+      "stake 50 near with validator.near",
+      "unstake everything from pool.near",
+      "claim my staking rewards",
+      "stake 100 near for max rewards",
+      "unstake half my tokens",
+      "check my staking balance",
+      "stake 25 near with best validator",
+      "emergency unstake from bad.near",
+      "compound my staking rewards",
+      "stake additional 75 near",
+      "unstake from all validators",
+      "view pending rewards",
+      "stake 200 near split between validators",
+      "start unstaking process",
+      "claim yesterdays rewards",
+      "stake near for 6 months",
+      "partial unstake 30 near",
+      "show my staking history",
+      "stake 150 near with trusted validator",
+      "immediate unstake request",
+      "restake my rewards",
+      "calculate staking returns"
+    ]
+  },
+  {
+    "action": "deploy_contract",
+    "parameters": {
+      "type": "object",
+      "required": ["code"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Contract code or URL to code"
+        },
+        "account_id": {
+          "type": "string",
+          "description": "Account ID to deploy to",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+        },
+        "init_args": {
+          "type": "object",
+          "description": "Initialization arguments for the contract"
+        },
+        "gas": {
+          "type": "string",
+          "description": "Gas limit for deployment"
+        }
+      }
+    },
+    "examples": [
+      "Deploy this smart contract <code>",
+      "Deploy this code <url>",
+      "deploy my nft contract",
+      "deploy token contract to testnet",
+      "deploy dao contract",
+      "deploy this marketplace code",
+      "deploy updated contract version",
+      "deploy staking contract",
+      "deploy from github repo",
+      "deploy testing contract",
+      "deploy to mainnet",
+      "deploy contract with params",
+      "deploy verified contract",
+      "deploy using cli",
+      "deploy beta version",
+      "deploy with custom gas",
+      "deploy production build",
+      "deploy contract upgrade",
+      "deploy with initialization",
+      "deploy using sdk",
+      "deploy emergency fix",
+      "deploy from local file",
+      "deploy with proxy",
+      "deploy contract bundle",
+      "deploy using near-cli"
+    ]
+  },
+  {
+    "action": "swap_tokens",
+    "parameters": {
+      "type": "object",
+      "required": ["amount_in", "token_in", "token_out"],
+      "properties": {
+        "amount_in": {
+          "type": "number",
+          "description": "Amount of input tokens",
+          "minimum": 0
+        },
+        "token_in": {
+          "type": "string",
+          "description": "Input token symbol"
+        },
+        "token_out": {
+          "type": "string",
+          "description": "Output token symbol"
+        },
+        "slippage": {
+          "type": "number",
+          "description": "Maximum allowed slippage percentage",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "examples": [
+      "Trade 10 USDCe to BANANA",
+      "Swap 10 USDT to NEAR",
+      "Exchange all my USDT to REF",
+      "swap 50 near for eth",
+      "trade my wnear for usn",
+      "exchange 100 usdt to near",
+      "swap exactly 25 eth for near",
+      "trade all near to usdt",
+      "convert 75 usn to near",
+      "swap with minimum slippage",
+      "quick trade 200 near",
+      "exchange tokens at best rate",
+      "swap using ref finance",
+      "trade with price impact",
+      "convert to stable coins",
+      "swap with custom route",
+      "trade avoiding high fees",
+      "exchange with deadline",
+      "swap including fees",
+      "trade at market price",
+      "convert with limit price",
+      "swap multiple tokens",
+      "exchange with protection",
+      "trade using trisolaris",
+      "swap with auto-routing"
+    ]
+  },
+  {
+    "action": "manage_liquidity",
+    "parameters": {
+      "type": "object",
+      "required": ["action_type", "pool_id"],
+      "properties": {
+        "action_type": {
+          "type": "string",
+          "enum": ["add", "remove"],
+          "description": "Type of liquidity action"
+        },
+        "pool_id": {
+          "type": "string",
+          "description": "Identifier of the liquidity pool"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount of tokens to add/remove",
+          "minimum": 0
+        },
+        "token_amounts": {
+          "type": "object",
+          "description": "Specific amounts for each token in the pool"
+        }
+      }
+    },
+    "examples": [
+      "Add liquidity to NEAR USDC pool",
+      "Remove all my liquidity",
+      "Stake my tokens in Ref Finance",
+      "add to near/eth pool",
+      "remove half liquidity",
+      "provide liquidity with ratio",
+      "withdraw from usdt pool",
+      "add balanced liquidity",
+      "remove specific amount",
+      "increase pool position",
+      "exit all pools",
+      "add single-sided liquidity",
+      "remove emergency withdrawal",
+      "provide with custom range",
+      "withdraw unused tokens",
+      "add to stable pool",
+      "remove expired position",
+      "provide maximum liquidity",
+      "withdraw rewards only",
+      "add to concentrated pool",
+      "remove from farm",
+      "provide with leverage",
+      "withdraw partial amount",
+      "add to new pool",
+      "remove before deadline"
+    ]
+  },
+  {
+    "action": "create_nft_collection",
+    "parameters": {
+      "type": "object",
+      "required": ["collection_name", "metadata"],
+      "properties": {
+        "collection_name": {
+          "type": "string",
+          "description": "Name of the NFT collection"
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["name", "symbol"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Collection display name"
+            },
+            "symbol": {
+              "type": "string",
+              "description": "Collection symbol/ticker"
+            },
+            "icon": {
+              "type": "string",
+              "description": "Base64 encoded icon image"
+            },
+            "base_uri": {
+              "type": "string",
+              "description": "Base URI for NFT media"
+            }
+          }
+        },
+        "contract_id": {
+          "type": "string",
+          "description": "Account ID for the collection contract",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+        }
+      }
+    },
+    "examples": [
+      "Deploy an NFT contract",
+      "Create a NFT collection",
+      "make new nft collection",
+      "deploy collection contract",
+      "create gaming nfts",
+      "setup art collection",
+      "initialize nft project",
+      "create collection metadata",
+      "deploy custom collection",
+      "setup nft marketplace",
+      "create limited series",
+      "deploy generative art",
+      "create profile nfts",
+      "setup membership tokens",
+      "create badge collection",
+      "deploy community nfts",
+      "create reward tokens",
+      "setup exclusive collection",
+      "create dynamic nfts",
+      "deploy music nfts",
+      "create video collection",
+      "setup access tokens",
+      "create rare items",
+      "deploy event tickets",
+      "create virtual land"
+    ]
+  },
+  {
+    "action": "mint_nft",
+    "parameters": {
+      "type": "object",
+      "required": ["contract_id", "receiver_id", "token_metadata"],
+      "properties": {
+        "contract_id": {
+          "type": "string",
+          "description": "NFT contract account ID",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+        },
+        "receiver_id": {
+          "type": "string",
+          "description": "Account ID to receive the NFT",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)$"
+        },
+        "token_metadata": {
+          "type": "object",
+          "required": ["title", "media"],
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Title of the NFT"
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of the NFT"
+            },
+            "media": {
+              "type": "string",
+              "description": "URL or IPFS hash of the NFT media"
+            },
+            "copies": {
+              "type": "integer",
+              "description": "Number of copies to mint",
+              "minimum": 1
+            },
+            "royalties": {
+              "type": "object",
+              "description": "Royalty configuration for secondary sales"
+            }
+          }
+        }
+      }
+    },
+    "examples": [
+      "Mint 10 NFTs from nft-contract.testnet",
+      "Create 1 NFT for baka.near from nonfungible.near",
+      "mint new nft on collection.near",
+      "create nft with metadata",
+      "mint batch of 5 nfts",
+      "mint rare edition",
+      "create custom nft",
+      "mint with attributes",
+      "create series #42",
+      "mint limited token",
+      "create special nft",
+      "mint with royalties",
+      "create unique piece",
+      "mint exclusive nft",
+      "create numbered edition",
+      "mint for giveaway",
+      "create reward nft",
+      "mint collection item",
+      "create profile token",
+      "mint game asset",
+      "create dynamic nft",
+      "mint with permission",
+      "create community nft",
+      "mint certificate",
+      "create event token"
+    ]
+  },
+  {
+    "action": "use_explorer",
+    "parameters": [
+      "// AccountId: The NEAR account identifier (e.g., 'hello.testnet', 'user.near')",
+      "// TxHash: The unique transaction hash identifier (e.g., 'AnjdX2Dc4JWXet5SEyctCyhMdhcvaBEG7kL1nhWR5eC5')",
+      "// BlockId: The unique block identifier (e.g., '177918659')",
+      "type Parameters =",
+      "{",
+      "  query: AccountId | TxHash | BlockId | \"self\";",
+      "  filters?: {",
+      "    date_range?: {",
+      "      start: string;",
+      "      end: string;",
+      "    };",
+      "    limit?: number;",
+      "  };",
+      "}[];"
+    ],
+    "examples": [
+      "Get this account baka.near",
+      "10 last transactions from hana.testnet",
+      "My transactions between 10 and 20 oct",
+      "My account",
+      "Get this block #177636284",
+      "988765432",
+      "Show this transactions 9Egvf5UkiKR1eQ3tSZEtZYpdK1UPHmm7zroRm33UTWqi",
+      "9LchEAMMPeQnVfZithhFXV6Q7gFjtpCsUgsVEEhmAbWw",
+      "baka.testnet",
+      "View all blocks",
+      "View all transactions",
+      "Show user.near transactions",
+      "check my recent txs",
+      "find transaction hash",
+      "show account balance",
+      "view contract calls",
+      "search block explorer",
+      "show token transfers",
+      "check pending txs",
+      "search account history",
+      "find specific block"
+    ]
+  },
+  {
+    "action": "use_social_component",
+    "parameters": {
+      "type": "object",
+      "required": ["widget_path"],
+      "properties": {
+        "widget_path": {
+          "type": "string",
+          "description": "Full path to the widget",
+          "pattern": "^[a-z0-9-_]+\\.(near|testnet)/widget/[A-Za-z0-9-_]+$"
+        },
+        "props": {
+          "type": "object",
+          "description": "Props to pass to the widget"
+        },
+        "page": {
+          "type": "string",
+          "description": "Page/route within the widget"
+        }
+      }
+    },
+    "examples": [
+      "Show potlock.near/widget/Index",
+      "Use Astra++ widget",
+      "Latest BOS applications",
+      "devhub.near/widget/app?page=home",
+      "open social feed widget",
+      "show profile component",
+      "use messaging widget",
+      "load community feed",
+      "display nft gallery",
+      "show staking dashboard",
+      "use governance widget",
+      "open defi dashboard",
+      "show market stats",
+      "use portfolio tracker",
+      "display dao interface",
+      "show transaction history",
+      "use swap interface",
+      "open farming dashboard",
+      "show rewards calculator",
+      "use voting widget",
+      "display analytics dashboard",
+      "show bridge interface",
+      "use wallet connector",
+      "open dex trading view",
+      "show liquidity pools"
+    ]
+  },
+  {
+    "action": "use_dapps",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": ["defi", "nft", "gaming", "social", "dao", "wallet", "tools"],
+          "description": "Category of dapps to explore"
+        },
+        "sort_by": {
+          "type": "string",
+          "enum": ["trending", "newest", "tvl", "volume"],
+          "description": "Sorting criteria"
+        },
+        "filter": {
+          "type": "object",
+          "properties": {
+            "min_tvl": {
+              "type": "number",
+              "description": "Minimum TVL filter"
+            },
+            "chain": {
+              "type": "string",
+              "description": "Chain filter (e.g., NEAR, Aurora)"
+            }
+          }
+        }
+      }
+    },
+    "examples": [
+      "Near ecosystem",
+      "Show trending dapps",
+      "All DeFi projects on NEAR",
+      "Explore dapps",
+      "Recommended projects",
+      "show top nft markets",
+      "find gaming dapps",
+      "best defi protocols",
+      "popular social dapps",
+      "new applications",
+      "show dao platforms",
+      "find yield farms",
+      "top lending protocols",
+      "best nft collections",
+      "show dex rankings",
+      "popular wallets",
+      "find staking apps",
+      "show bridge protocols",
+      "best marketplaces",
+      "find oracle services",
+      "show governance apps",
+      "top gaming guilds",
+      "find launchpads",
+      "show insurance protocols",
+      "best analytics tools"
+    ]
+  },
+  {
+    "action": "use_dao",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "dao_id": {
+          "type": "string",
+          "description": "DAO contract account ID",
+          "pattern": "^[a-z0-9-_]+\\.sputnik-dao\\.near$"
+        },
+        "query_type": {
+          "type": "string",
+          "enum": ["info", "members", "policy", "proposals", "treasury"],
+          "description": "Type of DAO information to retrieve"
+        },
+        "filters": {
+          "type": "object",
+          "properties": {
+            "member": {
+              "type": "string",
+              "description": "Filter by member account"
+            },
+            "role": {
+              "type": "string",
+              "description": "Filter by role"
+            }
+          }
+        }
+      }
+    },
+    "examples": [
+      "get this dao auroradao.sputnik-dao.near",
+      "Show ndctrust.sputnik-dao.near",
+      "Biggest daos on near",
+      "Create a new DAO",
+      "Explore daos",
+      "Members/Policy of this dao build.sputnik-dao.near",
+      "check dao treasury",
+      "view dao members",
+      "show dao proposals",
+      "get dao statistics",
+      "find active daos",
+      "show governance rules",
+      "check dao votes",
+      "view dao assets",
+      "show pending proposals",
+      "find dao contributors",
+      "check voting power",
+      "show dao activity",
+      "view member roles",
+      "get dao permissions",
+      "show council members",
+      "find dao policies",
+      "check dao balance",
+      "view dao history",
+      "show staking rules"
+    ]
+  },
+  {
+    "action": "use_dao_proposal",
+    "parameters": {
+      "type": "object",
+      "required": ["dao_id"],
+      "properties": {
+        "dao_id": {
+          "type": "string",
+          "description": "DAO contract account ID",
+          "pattern": "^[a-z0-9-_]+\\.sputnik-dao\\.near$"
+        },
+        "proposal_type": {
+          "type": "string",
+          "enum": ["view", "create", "vote"],
+          "description": "Type of proposal action"
+        },
+        "filters": {
+          "type": "object",
+          "properties": {
+            "proposer": {
+              "type": "string",
+              "description": "Filter by proposer account"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["active", "approved", "rejected", "expired"],
+              "description": "Filter by proposal status"
+            }
+          }
+        },
+        "vote": {
+          "type": "string",
+          "enum": ["approve", "reject"],
+          "description": "Vote decision"
+        }
+      }
+    },
+    "examples": [
+      "New proposals from meteor.sputnik-dao.near",
+      "Vote Yes on all proposals by user.near in build.sputnik-dao.near",
+      "Post a proposal in burrow.sputnik-dao.near",
+      "View proposals by baka.testnet",
+      "Show my proposals",
+      "create funding proposal",
+      "vote against proposal"
+    ]
+  }
+]

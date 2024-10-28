@@ -1,0 +1,80 @@
+// Color Palette
+// #db87e9, #9343fc 47.13%, #391771
+$brand-0: #391771;
+$brand-1: #8000ff;
+$brand-2: #e741ff;
+$brand-3: #fbebff;
+$brand-4: #faf2fc;
+$brand-5: #fef9ff;
+
+$black: #000;
+$white: #fff;
+$gray-1: #111;
+$gray-2: #666;
+$gray-3: #999;
+$gray-4: #ccc;
+$gray-5: #ddd;
+$gray-6: #eee;
+$gray-7: #f5f5f5;
+$gray-8: #f8f8f8;
+$blue: #39f;
+$green: #00bb4b;
+$red: #ff3634;
+$yellow: #ffc233;
+$yellow-light: #fff9db;
+
+$gold: #ffb300;
+
+// Box Shadow
+$shadow-1: 0 3px 4px 0 rgba(0, 0, 0, 0.04);
+$shadow-2: 0 4px 8px 0 rgba(0, 0, 0, 0.08);
+$shadow-3: 0 6px 10px 0 rgba(0, 0, 0, 0.08);
+
+// Gutter
+$gutter: 24px;
+
+// Border Radius
+$border-radius-sm: 0.25rem;
+$border-radius-md: 0.75rem;
+$border-radius-lg: 1.25rem;
+
+// Font Sizes
+$font-size-xs: 1rem * (12px / 16px);
+$font-size-sm: 1rem * (14px / 16px);
+$font-size-md: 1rem * (16px / 16px);
+$font-size-lg: 1rem * (18px / 16px);
+
+:root {
+  --brand-1: #{$brand-1} !important;
+  --brand-2: #{$brand-2} !important;
+  --brand-3: #{$brand-3} !important;
+  --brand-4: #{$brand-4} !important;
+  --brand-5: #{$brand-5} !important;
+  --black: #{$black} !important;
+  --white: #{$white} !important;
+  --gray-1: #{$gray-1} !important;
+  --gray-2: #{$gray-2} !important;
+  --gray-3: #{$gray-3} !important;
+  --gray-4: #{$gray-4} !important;
+  --gray-5: #{$gray-5} !important;
+  --gray-6: #{$gray-6} !important;
+  --gray-7: #{$gray-7} !important;
+  --gray-8: #{$gray-8} !important;
+  --blue: #{$blue} !important;
+  --green: #{$green} !important;
+  --red: #{$red} !important;
+  --yellow: #{$yellow} !important;
+  --yellow-light: #{$yellow-light} !important;
+  --gold: #{$gold} !important;
+  --font-size-xs: #{$font-size-xs} !important;
+  --font-size-sm: #{$font-size-sm} !important;
+  --font-size-md: #{$font-size-md} !important;
+  --font-size-lg: #{$font-size-lg} !important;
+  --radius-sm: #{$border-radius-sm} !important;
+  --radius-md: #{$border-radius-md} !important;
+  --radius-lg: #{$border-radius-lg} !important;
+  --shadow-1: #{$shadow-1} !important;
+  --shadow-2: #{$shadow-2} !important;
+  --shadow-3: #{$shadow-3} !important;
+  --gutter: #{$gutter} !important;
+}

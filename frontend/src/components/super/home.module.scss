@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  gap: 1rem;
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: -7px;
+    text-transform: uppercase;
+    opacity: 1;
+    color: #fff;
+    text-shadow:
+      1px -1px 0 #000,
+      -1px -1px 0 #000,
+      -2px -1px 1px #000,
+      -1px 2px 1px #030202,
+      -2px 4px 1px #060404,
+      -3px 6px 1px #181717,
+      -4px 8px 1px #2b2a2a,
+      -5px 10px 1px #3f3d3d,
+      -6px 12px 1px #424141,
+      -7px 14px 1px #565555,
+      -8px 16px 1px #6b6a69;
+  }
+}

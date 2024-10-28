@@ -1,0 +1,90 @@
+.FormItem + .FormItem {
+  margin-top: 0;
+}
+
+.ChatApp {
+  font-family: inherit !important;
+  background: var(--white);
+  color: var(--black);
+}
+
+.MessageContainer {
+  width: 100%;
+}
+
+.PullToRefresh {
+  padding-bottom: 110px;
+}
+
+.MessageList {
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.Navbar {
+  background: var(--gray-8);
+  border-color: var(--gray-6);
+}
+
+.ChatFooter {
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  transform: translateX(-50%);
+  left: 50%;
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
+  border: 1px solid var(--gray-4);
+  background: var(--gray-8);
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.ChatBubble {
+  border-radius: 8px;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  padding: 0.5em 1.25rem;
+  white-space: pre-wrap;
+  background: rgba(112, 107, 87, 0.05);
+  border-radius: 120px;
+  max-width: 100%;
+}
+
+.ChatBubble.assistant {
+  background: var(--white);
+}
+
+.ChatSpark {
+  width: 100%;
+  border-radius: 16px;
+  background: var(--white);
+  border: 1px solid var(--gray-6);
+}
+.ChatSparkMain {
+  padding: 1rem;
+}
+.ChatSparkHeader {
+  background: var(--brand-4);
+  padding: 1rem 1rem 0.75rem;
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}
+
+.Btn:disabled:not(.Btn--primary) {
+  color: var(--gray-1);
+  opacity: 0.9;
+}

@@ -1,0 +1,14 @@
+* {
+  scrollbar-color: var(--gray-5) transparent;
+}
+
+html {
+  font-size: 16px;
+  color: var(--black);
+  background: var(--white);
+  color-scheme: light !important;
+}
+
+body {
+  overflow: auto !important;
+}

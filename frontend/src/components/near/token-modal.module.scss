@@ -1,0 +1,105 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  transition: opacity 0.2s ease-in-out;
+  background-color: rgba(50, 50, 50, 0.5);
+  backdrop-filter: blur(2px);
+
+  &.fade-enter-active {
+    opacity: 1;
+  }
+
+  &.fade-exit-active {
+    opacity: 0;
+  }
+}
+
+.modalContent {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--white);
+  color: var(--black);
+  border: 1px solid var(--gray-5);
+  border-radius: 1rem;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+
+  &:hover {
+    .closeIcon {
+      color: var(--brand-1);
+    }
+  }
+}
+
+.closeIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.searchInput {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
+.tokenList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 1rem 0;
+}
+
+.tokenRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 1rem;
+  transition: opacity 0.2s ease;
+  opacity: 1;
+  cursor: pointer;
+  border: none;
+  background: var(--gray-8);
+  color: var(--gray-1);
+  padding: 1rem 1rem;
+  overflow: hidden;
+  text-align: left;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.tokenAddress {
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  max-width: 40%;
+  opacity: 0.6;
+}

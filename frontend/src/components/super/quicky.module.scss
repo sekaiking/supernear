@@ -1,0 +1,41 @@
+.container {
+  margin: 1rem;
+  border-radius: 20px;
+  width: 100%;
+
+  // background: rgba(255, 255, 255, 0.4);
+  // border-radius: 16px;
+  // box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  // backdrop-filter: blur(50px);
+
+  ul {
+    width: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  button {
+    background: #fff;
+    border-radius: 12px;
+    height: 140px;
+    border: 1px solid #eee;
+    padding: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0px 0px rgba(150, 150, 150, 0.1);
+    position: relative;
+    transition: box-shadow 0.1s ease-in-out;
+    width: 100%;
+
+    &:hover {
+      box-shadow: 0 1px 4px rgba(150, 150, 150, 0.1);
+    }
+  }
+}

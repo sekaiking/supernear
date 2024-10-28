@@ -1,0 +1,22 @@
+{
+  "name": "workers",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify"
+  },
+  "dependencies": {
+    "@ai-sdk/mistral": "^0.0.44",
+    "@near-js/crypto": "^1.4.1",
+    "@types/common-tags": "^1.8.4",
+    "ai": "^3.4.18",
+    "borsh": "^2.0.0",
+    "common-tags": "^1.8.2",
+    "hono": "^4.6.5",
+    "js-sha256": "^0.11.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241018.0",
+    "@types/node": "^22.7.7",
+    "wrangler": "^3.81.0"
+  }
+}

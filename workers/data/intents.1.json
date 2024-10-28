@@ -1,0 +1,135 @@
+[
+  {
+    "action": "send_token",
+    "examples": [
+      "Send 1 NEAR to alice.near",
+      "Transfer 5 USN to bob.testnet",
+      "Send 100 USDT to charlie.near",
+      "I want to send 10 NEAR tokens to dave.testnet",
+      "Transfer NEAR to eve.near",
+      "Split 0.5 NEAR between hana.near and baka.near"
+    ]
+  },
+  {
+    "action": "send_nft",
+    "examples": [
+      "Send my NFT to alice.near",
+      "Transfer NFT with ID #1234 to bob.testnet",
+      "Send collectible to charlie.near",
+      "I want to transfer my NFT to dave.testnet",
+      "Send my digital collectible to eve.near"
+    ]
+  },
+  {
+    "action": "call_contract",
+    "examples": [
+      "Call contract social.near",
+      "Call purshase in supernear.testnet",
+      "get_user_subscription('baka.near') contract.near"
+    ]
+  },
+  {
+    "action": "near_market",
+    "examples": [
+      "What is Near price today?",
+      "Near market cap",
+      "Near tokenomics"
+    ]
+  },
+  {
+    "action": "manage_stake",
+    "examples": [
+      "Stake 10 near near",
+      "Unstake my near",
+      "Collect staking rewards"
+    ]
+  },
+  {
+    "action": "deploy_contract",
+    "examples": ["Deploy this smart contract <code>", "Deploy this code <url>"]
+  },
+  {
+    "action": "swap_tokens",
+    "examples": [
+      "Trade 10 USDCe to BANANA",
+      "Swap 10 USDT to NEAR",
+      "Exchange  all my USDT to REF"
+    ]
+  },
+  {
+    "action": "manage_liquidity",
+    "examples": [
+      "Add liquidity to NEAR USDC pool",
+      "Remove all my liquidity",
+      "Stake my tokens in Ref Finance"
+    ]
+  },
+  {
+    "action": "create_nft_collection",
+    "examples": ["Deploy an NFT contract", "Create a NFT collection"]
+  },
+  {
+    "action": "mint_nft",
+    "examples": [
+      "Mint 10 NFTs from nft-contract.testnet",
+      "Create 1 NFT for baka.near from nonfungible.near"
+    ]
+  },
+  {
+    "action": "use_explorer",
+    "examples": [
+      "Get this account baka.near",
+      "10 last transactions from hana.testnet",
+      "My transactions between 10 and 20 oct",
+      "Show transactions that send USDC",
+      "My account",
+      "Get this block #177636284",
+      "Show this transactions 9Egvf5UkiKR1eQ3tSZEtZYpdK1UPHmm7zroRm33UTWqi",
+      "9LchEAMMPeQnVfZithhFXV6Q7gFjtpCsUgsVEEhmAbWw",
+      "baka.testnet",
+      "View all blocks",
+      "View all transactions",
+      "Show user.near transactions"
+    ]
+  },
+  {
+    "action": "use_social_component",
+    "examples": [
+      "Show potlock.near/widget/Index",
+      "Use Astra++ widget",
+      "Latest BOS applications",
+      "devhub.near/widget/app?page=home"
+    ]
+  },
+  {
+    "action": "use_dapps",
+    "examples": [
+      "Near ecosystem",
+      "Show trending dapps",
+      "All DeFi projects on NEAR",
+      "Explore dapps",
+      "Recommended projects"
+    ]
+  },
+  {
+    "action": "use_dao",
+    "examples": [
+      "get this dao auroradao.sputnik-dao.near",
+      "Show ndctrust.sputnik-dao.near",
+      "Biggest daos on near",
+      "Create a new DAO",
+      "Explore daos",
+      "Members/Policy of this dao build.sputnik-dao.near"
+    ]
+  },
+  {
+    "action": "use_dao_proposal",
+    "examples": [
+      "New proposals from meteor.sputnik-dao.near",
+      "Vote Yes on all proposals by user.near in build.sputnik-dao.near",
+      "Post a proposal in burrow.sputnik-dao.near",
+      "View proposals by baka.testnet",
+      "Show my proposals"
+    ]
+  }
+]

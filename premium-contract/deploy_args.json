@@ -1,0 +1,5 @@
+{
+  "owner_id": "super_near.near",
+  "referral_fee": { "numerator": 1, "denominator": 20 },
+  "premium_referral_fee": { "numerator": 1, "denominator": 10 }
+}

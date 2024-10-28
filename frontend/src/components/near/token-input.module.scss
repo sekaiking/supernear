@@ -1,0 +1,22 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 100px;
+  padding: 0 1rem;
+  border: none;
+  cursor: pointer;
+
+  img,
+  svg {
+    height: 24px;
+  }
+
+  h3,
+  span {
+    font-size: 0.8rem;
+    line-height: 1;
+    padding: 0.8rem 0 !important;
+    margin: 0;
+  }
+}

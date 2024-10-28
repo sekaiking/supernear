@@ -1,0 +1,174 @@
+"use client";
+import type {
+  AccountState,
+  WalletSelector,
+  WalletSelectorState,
+} from "@near-wallet-selector/core";
+import { setupWalletSelector } from "@near-wallet-selector/core";
+import { setupHereWallet } from "@near-wallet-selector/here-wallet";
+import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
+import type { WalletSelectorModal } from "@near-wallet-selector/modal-ui";
+import { setupModal } from "@near-wallet-selector/modal-ui";
+import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
+import { setupLedger } from "@near-wallet-selector/ledger";
+import { setupNightly } from "@near-wallet-selector/nightly";
+import { setupBitteWallet } from "@near-wallet-selector/bitte-wallet";
+
+import type { ReactNode } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
+import { isSignedInWithServer } from "@/utils/auth";
+import { usePathname, useRouter } from "next/navigation";
+
+const CONTRACT_ID = "example.testnet";
+
+interface WalletSelectorContextValue {
+  selector: WalletSelector;
+  modal: WalletSelectorModal;
+  accounts: Array<AccountState>;
+  accountId: string | null;
+}
+
+const WalletSelectorContext =
+  React.createContext<WalletSelectorContextValue | null>(null);
+
+export const WalletSelectorContextProvider: React.FC<{
+  children: ReactNode;
+}> = ({ children }) => {
+  const [selector, setSelector] = useState<WalletSelector | null>(null);
+  const [modal, setModal] = useState<WalletSelectorModal | null>(null);
+  const [accounts, setAccounts] = useState<Array<AccountState>>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const init = useCallback(async () => {
+    const callbackURL = new URL(location.origin + "/auth");
+    const _selector = await setupWalletSelector({
+      network: "testnet",
+      debug: true,
+      modules: [
+        setupMyNearWallet({
+          successUrl: callbackURL.toString(),
+        }),
+        setupLedger(),
+        // setupSender(),
+        setupMeteorWallet(),
+        // setupWelldoneWallet(),
+        setupHereWallet(),
+        // setupNeth({
+        //   gas: "300000000000000",
+        //   bundle: false,
+        // }),
+        // setupNearMobileWallet(),
+        // setupMintbaseWallet({ contractId: CONTRACT_ID }),
+        setupBitteWallet({
+          successUrl: callbackURL.toString(),
+          callbackUrl: callbackURL.toString(),
+          contractId: CONTRACT_ID,
+        }),
+        setupNightly(),
+      ] as any,
+    });
+    const _modal = setupModal(_selector, {
+      contractId: CONTRACT_ID,
+    });
+    const state = _selector.store.getState();
+    setAccounts(state.accounts);
+
+    setSelector(_selector);
+    setModal(_modal);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    init().catch((err) => {
+      console.error(err);
+      alert("Failed to initialise wallet selector");
+    });
+  }, [init]);
+
+  useEffect(() => {
+    if (!selector) {
+      return;
+    }
+
+    const subscription = selector.store.observable.subscribe(
+      async (state: WalletSelectorState) => {
+        try {
+          console.log("Accounts Update", state.accounts);
+          setAccounts(state.accounts);
+        } catch (error) {
+          console.error("Error in wallet subscription:", error);
+        }
+      },
+    );
+
+    const onHideSubscription = modal!.on("onHide", ({ hideReason }) => {
+      console.log(`The reason for hiding the modal ${hideReason}`);
+    });
+
+    const onSignedIn = selector.on("signedIn", (parms) => {
+      console.log(`signedIn`, parms);
+    });
+
+    const onAccountChange = selector.on("accountsChanged", (parms) => {
+      console.log(`accountsChanged`, parms);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+      onHideSubscription.remove();
+      onAccountChange.remove();
+      onSignedIn.remove();
+    };
+  }, [selector, modal]);
+
+  const walletSelectorContextValue = useMemo<WalletSelectorContextValue>(
+    () => ({
+      selector: selector!,
+      modal: modal!,
+      accounts,
+      accountId: accounts.find((account) => account.active)?.accountId || null,
+    }),
+    [selector, modal, accounts],
+  );
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  if (
+    walletSelectorContextValue.accountId &&
+    !isSignedInWithServer(walletSelectorContextValue.accountId)
+  ) {
+    router.push("/auth");
+    if (pathname != "/auth") {
+      return "Redirecting to account ownership verification...";
+    }
+  }
+
+  if (loading) {
+    return "Loading Wallet Selector";
+  }
+
+  return (
+    <WalletSelectorContext.Provider value={walletSelectorContextValue}>
+      {children}
+    </WalletSelectorContext.Provider>
+  );
+};
+
+export function useWalletSelector() {
+  const context = useContext(WalletSelectorContext);
+
+  if (!context) {
+    throw new Error(
+      "useWalletSelector must be used within a WalletSelectorContextProvider",
+    );
+  }
+
+  return context;
+}

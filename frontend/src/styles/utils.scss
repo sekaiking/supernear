@@ -1,0 +1,109 @@
+@mixin simpleSpace {
+  $spacings: (0, 0.25rem, 0.5rem, 1rem, 1.5rem, 2rem) !default;
+
+  $prefixes: (
+    p: padding,
+    px: (
+      padding-left,
+      padding-right,
+    ),
+    py: (
+      padding-top,
+      padding-bottom,
+    ),
+    pt: padding-top,
+    pr: padding-right,
+    pb: padding-bottom,
+    pl: padding-left,
+
+    m: margin,
+    mx: (
+      margin-left,
+      margin-right,
+    ),
+    my: (
+      margin-top,
+      margin-bottom,
+    ),
+    mt: margin-top,
+    mr: margin-right,
+    mb: margin-bottom,
+    ml: margin-left,
+    gap: gap,
+  ) !default;
+
+  @each $attr-short, $attr-list in $prefixes {
+    @each $space in $spacings {
+      .#{$attr-short}-#{ index(($spacings), $space)-1 } {
+        @each $attr in $attr-list {
+          #{$attr}: #{$space} !important;
+        }
+      }
+    }
+  }
+}
+
+@include simpleSpace();
+
+.d-f {
+  display: flex;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.fs-1 {
+  font-size: var(--font-size-xs);
+}
+.fs-2 {
+  font-size: var(--font-size-sm);
+}
+.fs-3 {
+  font-size: var(--font-size-md);
+}
+.fs-4 {
+  font-size: var(--font-size-lg);
+}
+.fw-1 {
+  font-weight: 300;
+}
+.fw-2 {
+  font-weight: 500;
+}
+.fw-3 {
+  font-weight: 600;
+}
+.fw-4 {
+  font-weight: 800;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    // width: 1170px;
+  }
+}

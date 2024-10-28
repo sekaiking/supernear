@@ -1,0 +1,59 @@
+[
+  {
+    "id": 0,
+    "category": "transfer",
+    "action": "send_token",
+    "parameters": [
+      {
+        "name": "token",
+        "type": "token",
+        "required": true,
+        "examples": ["NEAR", "USN", "USDT", "usdt.near", "ref.near"]
+      },
+      {
+        "name": "recipient",
+        "type": "account",
+        "required": true,
+        "examples": [".near", ".testnet"]
+      },
+      {
+        "name": "amount",
+        "type": "amount",
+        "required": true
+      }
+    ],
+    "examples": [
+      "Send 1 NEAR to alice.near",
+      "Transfer 5 USN to bob.testnet",
+      "Send 100 USDT to charlie.near",
+      "I want to send 10 NEAR tokens to dave.testnet",
+      "Transfer NEAR to eve.near"
+    ]
+  },
+  {
+    "id": 1,
+    "category": "transfer",
+    "action": "send_nft",
+    "parameters": [
+      {
+        "name": "nft",
+        "type": "nft",
+        "required": true,
+        "examples": ["NFT", "token ID", "collectible"]
+      },
+      {
+        "name": "recipient",
+        "type": "account",
+        "required": true,
+        "examples": [".near", ".testnet"]
+      }
+    ],
+    "examples": [
+      "Send my NFT to alice.near",
+      "Transfer NFT with ID #1234 to bob.testnet",
+      "Send collectible to charlie.near",
+      "I want to transfer my NFT to dave.testnet",
+      "Send my digital collectible to eve.near"
+    ]
+  }
+]
