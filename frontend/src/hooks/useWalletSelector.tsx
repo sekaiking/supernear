@@ -1,4 +1,5 @@
 "use client";
+import { networkId } from "@/config";
 import { log } from "@/utils/log";
 import { setupBitteWallet } from "@near-wallet-selector/bitte-wallet";
 import {
@@ -50,7 +51,7 @@ export const WalletSelectorContextProvider: React.FC<{
     log("initializing @near-wallet-selector and modal ui");
     const callbackURL = new URL(location.href);
     const _selector = await setupWalletSelector({
-      network: "testnet",
+      network: networkId,
       debug: true,
       modules: [
         setupMyNearWallet({
