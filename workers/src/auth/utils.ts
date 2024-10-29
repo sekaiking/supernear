@@ -1,6 +1,6 @@
 import { Buffer } from "node:buffer";
 import { getRandomValues } from "node:crypto";
-import { Bindings } from "..";
+import { Bindings, SuperContext } from "..";
 import {
   JWT_COOKIE_EXPIRATION_SECONDS,
   NONCE_EXPIRATION_SECONDS,
@@ -64,4 +64,28 @@ export const createJWT = (
     plan: "free",
   };
   return signJWT(payload, secret);
+};
+
+export const getDomainFromRequest = (c: SuperContext): string => {
+  const host = c.req.header("host") || "localhost";
+
+  // Remove port number if present
+  const domain = host.split(":")[0];
+
+  // If it's localhost or an IP address, return as is
+  if (
+    domain === "localhost" ||
+    /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(domain)
+  ) {
+    return domain;
+  }
+
+  // For production domains, we might want to support subdomains
+  // Return the main domain by getting the last two parts
+  const parts = domain.split(".");
+  if (parts.length > 2) {
+    return parts.slice(-2).join(".");
+  }
+
+  return domain;
 };

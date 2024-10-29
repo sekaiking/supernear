@@ -1,6 +1,6 @@
 import { SuperContext } from "..";
 import { verifyFullKeyBelongsToUser, verifySignature } from "./signature";
-import { createJWT, verifyNonce } from "./utils";
+import { createJWT, getDomainFromRequest, verifyNonce } from "./utils";
 import {
   CLIENT_COOKIE_KEY,
   JWT_COOKIE_EXPIRATION_SECONDS,
@@ -68,12 +68,15 @@ export const route_auth_signin = async (c: SuperContext) => {
     new Date().getTime() + JWT_COOKIE_EXPIRATION_SECONDS * 1000,
   );
 
+  const domain = getDomainFromRequest(c);
+  console.log(domain);
+
   // Set JWT token
   setCookie(c, JWT_COOKIE_KEY, token, {
     path: "/",
     secure: true,
-    domain: "localhost",
     httpOnly: true,
+    domain,
     maxAge: JWT_COOKIE_EXPIRATION_SECONDS,
     expires: expires,
     sameSite: "Strict",
@@ -91,6 +94,7 @@ export const route_auth_signin = async (c: SuperContext) => {
     {
       maxAge: JWT_COOKIE_EXPIRATION_SECONDS,
       expires: expires,
+      domain,
     },
   );
 

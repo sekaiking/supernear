@@ -93,7 +93,7 @@ export default function Navbar() {
                 opacity={0.8}
                 fontSize={16}
               />
-              PRE-ALPHA
+              DISCLAIMER
             </button>
           </div>
 
@@ -220,7 +220,7 @@ export default function Navbar() {
       ></Modal>
       <Confirm
         active={openPreAlphWarning}
-        title="Public Pre-Alpha Warning"
+        title="Early Access Warning"
         onClose={() => {
           setOpenPreAlphWarning(false);
         }}
@@ -237,12 +237,20 @@ export default function Navbar() {
         <div style={{ textAlign: "left" }}>
           <p className="mb-2">Welcome to SuperNear!</p>
           <p className="mb-2">
-            Please note: This version includes some initial features, but
-            development is still in progress, and some functions may be
-            unstable. By using this version, you’re helping us explore, refine
-            and improve for future releases.
+            This project is currently in <b>Active Development</b>. Some
+            features are up and running, but you may encounter bugs, incomplete
+            functionality, or changes as we continue refining SuperNear. By
+            using this version, you’re contributing directly to its evolution
+            and helping us shape it for the future. For feedback or to follow
+            our progress, visit{" "}
+            <a href="https://github.com/sekaiking/supernear" target="_blank">
+              our GitHub
+            </a>
+            .
           </p>
-          <p>Proceed with Caution and thank you for your feedback!</p>
+          <p>
+            Proceed with caution, and thank you for your support and feedback!
+          </p>
         </div>
       </Confirm>
     </nav>

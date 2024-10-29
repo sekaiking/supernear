@@ -15,7 +15,6 @@ export type Bindings = {
   PLANS_RATE_LIMIT_STORE: KVNamespace;
   CACHED_USER_PLANS: KVNamespace;
   AI: Ai;
-  DB: D1Database;
   VECTOR_INDEX: VectorizeIndex;
   CONTRACT_ID: string;
   SECRET: string;
@@ -39,7 +38,11 @@ app.get("/", async (c) => {
 app.use(
   "/api/*",
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [
+      "http://localhost:3000",
+      "https://www.supernear.app",
+      "https://supernear.app",
+    ],
     credentials: true,
   }),
 );
