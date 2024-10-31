@@ -35,6 +35,7 @@ export function createTransactionManager(
     onError?: (error: Error) => void,
   ) {
     useEffect(() => {
+      if (!signerId) return;
       const params = new URLSearchParams(window.location.search);
       const hasCallback =
         params.has("txManagerKey") &&
@@ -64,12 +65,10 @@ export function createTransactionManager(
         browserResponse.transactionHashes &&
         browserResponse.transactionHashes[0]
       ) {
-        get_transaction_status(
-          Array.isArray(browserResponse.transactionHashes)
-            ? browserResponse.transactionHashes[0]
-            : browserResponse.transactionHashes,
-          signerId!,
-        )
+        const txId = Array.isArray(browserResponse.transactionHashes)
+          ? browserResponse.transactionHashes[0]
+          : browserResponse.transactionHashes;
+        get_transaction_status(txId, signerId!)
           .then((outcome) => {
             onSuccess?.(outcome);
           })
@@ -89,7 +88,7 @@ export function createTransactionManager(
         url.searchParams.delete(param);
       });
       window.history.replaceState({}, "", url.toString());
-    }, [onSuccess, onError]);
+    }, [onSuccess, onError, signerId]);
   }
 
   // Function to initiate transaction

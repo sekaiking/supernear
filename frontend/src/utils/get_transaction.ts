@@ -1,3 +1,4 @@
+import { getSignedAccountId } from "@/app/providers";
 import { FinalExecutionOutcome } from "@near-wallet-selector/core";
 
 export const get_transaction_status = async (
@@ -11,7 +12,7 @@ export const get_transaction_status = async (
     method: "tx",
     params: {
       tx_hash: tx_hash,
-      sender_account_id: sender_account_id,
+      sender_account_id: sender_account_id || getSignedAccountId() || "",
       wait_until: wait_until || "EXECUTED_OPTIMISTIC",
     },
   };
