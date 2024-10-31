@@ -94,7 +94,7 @@ export default function Sparks({}) {
         {sparks.map((s, i) => (
           <SparkCard
             key={i}
-            logo={s.logo}
+            // logo={s?.logo}
             title={s.title}
             description={s.description}
             isInstalled={s.installed}
