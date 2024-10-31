@@ -30,8 +30,10 @@ export default function SuperChat({
   const messagesRef = useRef<any>(null);
   const [scrollDown, setScrollDown] = useState(false);
 
-  function handleQuickReplyClick(item: QuickReplyItemProps) {
-    handleSend("text", item.name);
+  function handleQuickReplyClick(
+    item: QuickReplyItemProps & { value?: string },
+  ) {
+    handleSend("text", item.value || item.name);
   }
 
   const handleSaveSettings: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -151,7 +153,7 @@ export default function SuperChat({
   );
 }
 
-function renderMessageContent(msg: MessageProps) {
+export function renderMessageContent(msg: MessageProps) {
   const { type, content, user } = msg;
   const { settings } = useSuperChat();
   const {

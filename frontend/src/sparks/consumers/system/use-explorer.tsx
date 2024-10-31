@@ -9,6 +9,8 @@ import { useMessageParameter } from "@/hooks/useMessageParameter";
 import { AccountRPCResult, get_account } from "@/utils/get_account";
 import toast from "react-hot-toast";
 import { calcDecimals, uncalcDecimals } from "@/utils/tokens";
+import { useWalletSelector } from "@/hooks/useWalletSelector";
+import { getSignedAccountId } from "@/app/providers";
 
 export const useExplorerConsumer: SparkConsumer = {
   id: "use_explorer",
@@ -54,9 +56,7 @@ function UI({
     "filters",
   );
 
-  if (query === "self") {
-  }
-  if (ACCOUNT_ID_REGEX.test(query)) {
+  if (ACCOUNT_ID_REGEX.test(query) || query == "self") {
     return <AccountExplorer accountId={query} />;
   }
   if (TX_HASH_REGEX.test(query)) {
@@ -67,10 +67,16 @@ function UI({
   return <div>Can&apos;t parse your query: {query}</div>;
 }
 
-function AccountExplorer({ accountId }: { accountId: string }) {
+function AccountExplorer({ accountId }: { accountId?: string }) {
   const [data, setData] = useState<AccountRPCResult | void | undefined>(
     undefined,
   );
+
+  const { accountId: signedId } = useWalletSelector();
+
+  if (accountId == "self" || !accountId) {
+    accountId = signedId || getSignedAccountId();
+  }
 
   useEffect(() => {
     if (!accountId) return;

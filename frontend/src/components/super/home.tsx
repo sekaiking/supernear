@@ -32,19 +32,19 @@ export default function SuperHome() {
             title: "I'd like to transfer some NEAR",
           },
           {
-            title: "Give me a breakdown of my wallet",
+            title: "Call Smart Contract",
           },
           {
-            title: "All my transactions between 1 oct and 10 oct",
+            title: "Get my account data",
           },
           {
             title: "What can SuperNear do?",
           },
           {
-            title: "What's the current price of Near?",
+            title: "Tell me about Near Blockchain",
           },
           {
-            title: "What are the trending Dapps?",
+            title: "Who is SuperNear?",
           },
         ]}
         onQuicky={(item: any) => {

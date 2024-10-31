@@ -62,25 +62,21 @@ const sparks = [
     installed: false,
   },
   {
-    logo: daos.src,
     title: "Social Data",
     description: "",
     installed: false,
   },
   {
-    logo: daos.src,
     title: "BOS Components",
     description: "",
     installed: false,
   },
   {
-    logo: daos.src,
     title: "DAOs",
     description: "",
     installed: false,
   },
   {
-    logo: potlock.src,
     title: "POTLOCK",
     description: "",
     installed: false,

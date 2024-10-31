@@ -18,12 +18,20 @@ import useCrossTabState from "@/hooks/useCrossState";
 
 const defaultQuickReplies = [
   {
-    name: "Send 0.1 near to hello.near",
+    name: "My Account Data",
     isHighlight: false,
   },
-  { name: "Call hello.near-examples.testnet get_greeting" },
   {
-    name: "split 1000 usdt between user1.near and user2.near",
+    name: "Send 0.01 near to hello.near",
+    isHighlight: false,
+  },
+  {
+    name: "Call donate on donate.potlock.near",
+    value:
+      'Call donate on donate.potlock.near with 1 near and arguments: {"bypass_protocol_fee": false,  "message": "",  "recipient_id": "build.sputnik-dao.near"}',
+  },
+  {
+    name: "Split 5 NEAR between hana.near and baka.near",
     isNew: false,
     isHighlight: false,
   },
@@ -213,7 +221,11 @@ function InnerChat({
           })
           .catch((e) => {
             console.error(e);
-            alert("Something went wrong, check console for details");
+            toast.error(
+              e?.response?.data?.message ||
+                e?.message ||
+                "Something went wrong, check console for details",
+            );
           })
           .finally(() => {
             setWaiting(false);

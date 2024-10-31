@@ -42,7 +42,7 @@ function UI({
     "contract_id",
   );
   const [method, setMethod] = useMessageParameter(msg, update, "method_name");
-  const [args, setArgs] = useMessageParameter<object>(msg, update, "arguments");
+  const [args, setArgs] = useMessageParameter<object>(msg, update, "args");
   const [argsStr, setArgsStr] = useState(JSON.stringify(args, null, 2));
   const [attachedAmountStr, setAttachedAmount] = useMessageParameter<
     string | number
